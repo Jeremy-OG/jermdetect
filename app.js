@@ -43,5 +43,5 @@ app.get('/metrics', async (req, res)=>{
 
 // start our server and tell it to listen for users, run application
 app.listen(port, ()=>{
-    console.log ('JermDetect is running at http://localhost:${port}');
+    console.log (`JermDetect is running at http://localhost:${port}`);
 });
