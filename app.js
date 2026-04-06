@@ -2,7 +2,7 @@
 const express = require('express');
 const client = require('prom-client');
 
-// create my web server and open standard dev port(3000)
+// create my web server and open standard dev port(4000)
 const app = express()
 const port = 4000;
 
