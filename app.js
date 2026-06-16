@@ -11,9 +11,6 @@ app.get('/', (req, res)=>{
     res.send('<h1>JermDetect is Online</h1><p>Security monitoring active</p>');
 });
 
-//  grab my default metrics from prom and tell app to store them in "register"
-const collectDefaultMetrics = client.collectDefaultMetrics;
-collectDefaultMetrics({ register: client.register});
 
 // create our custom counter login checker metric in prom for extra security measure
 const loginAttempts = new client.Counter({
