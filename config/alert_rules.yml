@@ -1,5 +1,5 @@
 groups:
-  - name: jermdetect_alerts
+  - name: security_alerts
     rules:
       - alert: HighResponseTime
         expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 1
@@ -11,8 +11,8 @@ groups:
           description: "The 95th percentile of response times is over 1 second (currently {{ $value }}s)."
 
       - alert: LoginFailureSpike
-        expr: rate(login_attempts_total{status="failure"}[1m]) * 60 > 10
-        for: 30s
+        expr: rate(jermdetect_login_attempts_total{status="failure"}[1m]) * 60 > 10
+        for: 10s
         labels:
           severity: warning
         annotations:
