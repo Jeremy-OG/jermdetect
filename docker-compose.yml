@@ -26,6 +26,7 @@ services:
       - ./config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
     command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--config.expand-env'
     environment:
       - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
     ports:
