@@ -9,12 +9,11 @@ alerting:
   alertmanagers:
     - static_configs:
         - targets:
-          # - alertmanager:9093
+            - alertmanager:9093
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
+  - "alert_rules.yml"
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -32,6 +31,6 @@ scrape_configs:
           app: "prometheus"
   - job_name: "jermdetect_app"
     static_configs:
-      - targets : ["localhost:4000"]
+      - targets : ["jermdetect_app:4000"]
 
 
