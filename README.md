@@ -37,7 +37,7 @@ node app.js
 
 ```
 
-*The server will start on `http://localhost:3000`.*
+*The server will start on `http://localhost:4000`.*
 
 ### 2. Start the Monitor (The Brain)
 
