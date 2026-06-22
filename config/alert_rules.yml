@@ -1,0 +1,20 @@
+groups:
+  - name: jermdetect_alerts
+    rules:
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High Latency Detected on Server"
+          description: "The 95th percentile of response times is over 1 second (currently {{ $value }}s)."
+
+      - alert: LoginFailureSpike
+        expr: rate(login_attempts_total{status="failure"}[1m]) * 60 > 10
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Potential Brute Force Attack"
+          description: "Login failures are spiking drastically: over 10 failures in the last minute."
