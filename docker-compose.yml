@@ -24,9 +24,10 @@ services:
     image: prom/alertmanager:latest
     volumes:
       - ./config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
-    command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
-      - '--config.expand-env'
+      - ./config/alertmanager-entrypoint.sh:/etc/alertmanager/render-config.sh
+    entrypoint:
+      - /bin/sh
+      - /etc/alertmanager/render-config.sh
     environment:
       - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
     ports:

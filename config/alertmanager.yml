@@ -11,7 +11,7 @@ route:
 receivers:
   - name: 'slack-notifications'
     slack_configs:
-      - api_url: '${SLACK_WEBHOOK_URL}' 
+      - api_url: '__SLACK_WEBHOOK_URL__'
         channel: '#jermdetect-alerts'
         send_resolved: true
         text: "🚨 *Alert:* {{ .CommonAnnotations.summary }}\n📌 *Description:* {{ .CommonAnnotations.description }}\n🔥 *Severity:* {{ .CommonLabels.severity }}"
