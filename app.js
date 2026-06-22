@@ -1,9 +1,10 @@
 // import tools and frameworks
 const express = require('express');
-const client = require('prom-client');
+const { client, requestTimer} = require('./monitoring');
 
 // create my web server and open standard dev port(4000)
-const app = express()
+const app = express();
+app.use(requestTimer);
 const port = 4000;
 
 //Home route
