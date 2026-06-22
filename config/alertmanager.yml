@@ -11,7 +11,7 @@ route:
 receivers:
   - name: 'slack-notifications'
     slack_configs:
-      - api_url: 'http://placeholder-url' # Docker intercepts this and swaps it with the real token
+      - api_url: '${SLACK_WEBHOOK_URL}' 
         channel: '#jermdetect-alerts'
         send_resolved: true
         text: "🚨 *Alert:* {{ .CommonAnnotations.summary }}\n📌 *Description:* {{ .CommonAnnotations.description }}\n🔥 *Severity:* {{ .CommonLabels.severity }}"
