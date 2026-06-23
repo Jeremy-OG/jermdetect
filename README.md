@@ -1,57 +1,82 @@
-# JermDetect 
-
+# JermDetect
 **Real-time Observability & Automated Incident Response for Node.js**
-
-JermDetect is a specialized observability pipeline designed to monitor application health and security anomalies. It bridges the gap between raw metrics and actionable intelligence using a modern DevOps stack.
-
-##  Tech Stack
-
-* **Backend:** Node.js
-* **Metrics:** Prometheus
-* **Visualization:** Grafana
-* **Alerting:** Alertmanager & Slack API
-
-##  Key Features
-
-* **Real-time Metrics:** Tracking application health and performance.
-* **Security Monitoring:** Custom counters for tracking login successes and failures to detect brute-force patterns.
-* **Slack Integration:** Automated notifications for system health changes.
-* **Infrastructure as Code:** Pre-configured `prometheus.yml` for rapid deployment.
-
-## Prerequisites
-
-Before running, ensure you have the following installed:
-
-* [Node.js](https://nodejs.org/) (LTS)
-* [Prometheus](https://prometheus.io/download/) (Note: Use the Windows ARM64 version for Snapdragon X systems)
-* [Grafana](https://grafana.com/grafana/download)
-
-## 🚦 Getting Started
-
-### 1. Start the Application (The Heart)
-
+ 
+JermDetect is a production-style observability pipeline that monitors application health and detects security anomalies in real time. It bridges the gap between raw metrics and actionable intelligence using a containerized DevOps stack.
+ 
+---
+ 
+## Tech Stack
+ 
+| Layer | Technology |
+|---|---|
+| Backend | Node.js + Express |
+| Metrics | Prometheus (custom counters + histograms) |
+| Visualization | Grafana + PromQL |
+| Alerting | Alertmanager + Slack Webhooks |
+| Infrastructure | Docker + Docker Compose |
+ 
+---
+ 
+## Key Features
+ 
+- **Real-time Metrics** — Tracks HTTP request duration across all routes using Prometheus histogram exporters with configurable latency buckets
+- **Security Monitoring** — Custom counters detect login success/failure patterns; alert rules fire on brute-force spikes (10+ failures/min)
+- **Automated Alerting** — Alertmanager routes critical and warning severity alerts to Slack in real time via webhook integration
+- **p95 Latency Tracking** — PromQL queries surface the 95th percentile response time, triggering alerts when thresholds exceed 1 second
+- **Fully Containerized** — Entire stack (app, Prometheus, Grafana, Alertmanager) spun up with a single Docker Compose command
+---
+ 
+## Getting Started
+ 
+### Prerequisites
+ 
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- A Slack Incoming Webhook URL (for alert routing)
+### Run the Stack
+ 
+1. Clone the repo and navigate to the project directory
 ```bash
+git clone https://github.com/YOUR_USERNAME/jermdetect.git
 cd jermdetect
-npm install
-node app.js
-
 ```
-
-*The server will start on `http://localhost:4000`.*
-
-### 2. Start the Monitor (The Brain)
-
-Navigate to your Prometheus directory and run:
-
-```powershell
-.\prometheus.exe --config.file=prometheus.yml
-
+ 
+2. Create a `.env` file in the root with your Slack webhook:
+```bash
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/url
 ```
-
-*Verify connection at `http://localhost:9090/targets`.*
-
-## 🛣️ Roadmap
-
-* [ ] Implement Grafana Dashboards for visual anomaly detection.
-* [ ] Integrate Reactive Slack AI Agent for on-demand status checks.
-* [ ] Add In-App Monitoring Co-Pilot for root-cause analysis.
+ 
+3. Spin up the full stack:
+```bash
+docker compose up --build
+```
+ 
+### Service URLs
+ 
+| Service | URL |
+|---|---|
+| JermDetect App | http://localhost:4000 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3000 |
+| Alertmanager | http://localhost:9093 |
+ 
+### Simulate Traffic
+ 
+Hit the login endpoint to generate metrics:
+ 
+```bash
+# Simulate login attempts (randomized success/failure)
+curl http://localhost:4000/login
+ 
+# View raw Prometheus metrics
+curl http://localhost:4000/metrics
+```
+ 
+---
+ 
+## Alert Rules
+ 
+| Alert | Condition | Severity |
+|---|---|---|
+| HighResponseTime | p95 latency > 1s for 1 min | Critical |
+| LoginFailureSpike | >10 failures/min for 10s | Warning |
+ 
