@@ -36,7 +36,7 @@ JermDetect is a production-style observability pipeline that monitors applicatio
  
 1. Clone the repo and navigate to the project directory
 ```bash
-git clone https://github.com/YOUR_USERNAME/jermdetect.git
+git clone https://github.com/Jeremy-OG/jermdetect.git
 cd jermdetect
 ```
  
